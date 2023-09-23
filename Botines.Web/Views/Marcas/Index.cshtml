@@ -1,0 +1,77 @@
+﻿@using PagedList.Mvc;
+@model PagedList.IPagedList<Botines.Web.ViewModels.Marca.MarcaListVm>
+
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Lista de MARCAS</h2>
+@if (User.IsInRole("Admin"))
+{
+    <p>
+        @Html.ActionLink("Agregar Marca", "Create", null, new { @class = "btn btn-primary" })
+    </p>
+}
+
+
+@if (User.IsInRole("Admin"))
+{   if (TempData["Msg"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["Msg"].ToString()
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+}
+
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().NombreMarca)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Imagen)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.NombreMarca)
+                </td>
+                <td>
+                    @if (item.Imagen != null)
+                    {
+                        <img src="@Url.Content(Botines.Utilidades.WC.MarcasImagenesFolder+item.Imagen)" style="width:100px; height:60px" />
+                    }
+                    else
+                    {
+                        <img src="@Url.Content(Botines.Utilidades.WC.SinImagenDisponible)" style="width: 100px; height: 60px " />
+
+                    }
+                </td>
+                <td>
+                    @Html.ActionLink("Detalles", "Details", new { id = item.MarcaId }, new { @class = "btn btn-sm btn-primary" })
+                </td>
+                @if (User.IsInRole("Admin"))
+                {
+                    <td>
+                        @Html.ActionLink("Editar", "Edit", new { id = item.MarcaId }, new { @class = "btn btn-sm btn-warning" }) |
+                        @Html.ActionLink("Borrar", "Delete", new { id = item.MarcaId }, new { @class = "btn btn-sm btn-danger" })
+                    </td>
+                }
+            </tr>
+        }
+
+    </table>
+    Página: @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de: @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("Index", new
+    {
+        page,
+        pageSize = ViewBag.PageSize
+    }))

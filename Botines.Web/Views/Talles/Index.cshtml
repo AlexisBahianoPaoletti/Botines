@@ -1,0 +1,68 @@
+﻿@using PagedList.Mvc;
+@model PagedList.IPagedList<Botines.Web.ViewModels.Talle.TalleListVm>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Lista de TALLES</h2>
+@if (User.IsInRole("Admin"))
+{
+    <p>
+        @Html.ActionLink("Agregar Talle", "Create", null, new { @class = "btn btn-primary" })
+    </p>
+}
+
+@if (User.IsInRole("Admin"))
+{
+    if (TempData["Msg"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["Msg"].ToString()
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().NumeroTalle)
+        </th>
+        <th>
+            Cant de modelos
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumeroTalle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cantidad)
+            </td>
+            <td>
+                @Html.ActionLink("Detalles", "TalleBotines", new { id = item.TalleId }, new { @class = "btn btn-sm btn-primary" })
+            </td>
+            @*<td>
+                @Html.ActionLink("Detalles", "Details", new { id = item.TalleId }, new { @class = "btn btn-sm btn-primary" })
+            </td>*@
+            @if (User.IsInRole("Admin"))
+            {
+                <td>
+                    @Html.ActionLink("Editar", "Edit", new { id = item.TalleId }, new { @class = "btn btn-sm btn-warning" }) |
+                    @Html.ActionLink("Borrar", "Delete", new { id = item.TalleId }, new { @class = "btn btn-sm btn-danger" })
+                </td>
+            }
+        </tr>
+    }
+
+</table>
+    Página: @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de: @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("Index", new
+    {
+        page,
+        pageSize = ViewBag.PageSize
+    }))

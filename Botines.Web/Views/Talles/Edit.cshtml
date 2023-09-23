@@ -1,0 +1,35 @@
+﻿@model Botines.Web.ViewModels.Talle.TalleEditVm
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Editar TALLE</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.TalleId)
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.NumeroTalle, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.NumeroTalle, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.NumeroTalle, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group mt-3">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Editar" class="btn btn-warning" /> |
+            @Html.ActionLink("Volver", "Index", null, new { @class = "btn btn-success" })
+        </div>
+    </div>
+</div>
+}

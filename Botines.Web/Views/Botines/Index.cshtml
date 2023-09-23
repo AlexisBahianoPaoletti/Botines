@@ -1,0 +1,105 @@
+﻿@using PagedList.Mvc
+@model PagedList.IPagedList<Botines.Web.ViewModels.Botin.BotinListVm>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Lista de Botines</h2>
+@if (User.IsInRole("Admin"))
+{
+    <p>
+        @Html.ActionLink("Agregar Botin", "Create", null, new { @class = "btn btn-primary" })
+    </p>
+}
+
+@if (User.IsInRole("Admin"))
+{
+    if (TempData["Msg"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["Msg"].ToString()
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().NombreBotin)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Marca)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Modelo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().PrecioVenta)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Imagen)
+        </th>
+        @*<th>
+                @Html.DisplayNameFor(model => model.Suspendido)
+            </th>*@
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombreBotin)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Marca)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Modelo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrecioVenta)
+            </td>
+            <td>
+                @if (item.Imagen != null)
+                {
+                    <img src="@Url.Content(Botines.Utilidades.WC.BotinesImagenesFolder+item.Imagen)" style="width:125px; height:65px" />
+                }
+                else
+                {
+                    <img src="@Url.Content(Botines.Utilidades.WC.SinImagenDisponible)" style="width: 125px; height: 65px " />
+
+                }
+            </td>
+            @*<td>
+        @Html.DisplayFor(modelItem => item.Suspendido)
+        </td>*@
+
+            <td>
+                @Html.ActionLink("Detalles", "BotinTalles", new { id = item.BotinId }, new { @class = "btn btn-sm btn-info" })
+            </td>
+            @*<td>
+                    @Html.ActionLink("Detalles", "Details", new { id = item.BotinId }, new { @class = "btn btn-sm btn-primary" })
+            </td>*@
+            @if (User.IsInRole("Admin"))
+            {
+                <td>
+                    @Html.ActionLink("Editar", "Edit", new { id = item.BotinId }, new { @class = "btn btn-sm btn-warning" }) |
+                    @Html.ActionLink("Borrar", "Delete", new { id = item.BotinId }, new { @class = "btn btn-sm btn-danger" })
+
+                </td>
+            }
+        </tr>
+    }
+
+</table>
+Página: @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de: @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index", new
+{
+    page,
+    pageSize = ViewBag.PageSize
+}))
+
+

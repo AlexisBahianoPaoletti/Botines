@@ -1,0 +1,89 @@
+﻿@model Botines.Web.ViewModels.Venta.VentaDetailVm
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Detalles de la Venta</h2>
+
+<div>
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.DisplayNameFor(model => model.Venta.VentaId)
+                @Html.TextBoxFor(model => model.Venta.VentaId, new { @class = "form-control", @disabled = "disabled" })
+
+            </div>
+            <div class="form-group">
+                @Html.DisplayNameFor(model => model.Venta.Fecha)
+                @Html.TextBoxFor(model => model.Venta.Fecha, new { @class = "form-control", @disabled = "disabled" })
+
+            </div>
+
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.DisplayNameFor(model => model.Venta.Cliente)
+                @Html.TextBoxFor(model => model.Venta.Cliente, new { @class = "form-control", @disabled = "disabled" })
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<p class="mt-3">
+
+    @Html.ActionLink("Volver", "Index", null, new { @class = "btn btn-success" })
+</p>
+<hr />
+
+<table class="table table-bordered table-hover w-75">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Detalles.FirstOrDefault().Botin)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Detalles.FirstOrDefault().Cantidad)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Detalles.FirstOrDefault().PrecioVenta)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Detalles.FirstOrDefault().Subtotal)
+        </th>
+
+    </tr>
+    @foreach (var item in Model.Detalles)
+    {
+        <tr>
+            <td style="text-align:center">
+                @Html.DisplayFor(modelItem => item.Botin)
+            </td>
+            <td style="text-align:right">
+                @Html.DisplayFor(modelItem => item.Cantidad)
+            </td>
+            <td style="text-align:right">
+                @Html.DisplayFor(modelItem => item.PrecioVenta)
+            </td>
+            <td style="text-align:right">
+                @Html.DisplayFor(modelItem => item.Subtotal)
+            </td>
+
+        </tr>
+    }
+    <tr>
+        <td class="fw-bold">
+            Total:
+        </td>
+        <td class="fw-bold" style="text-align:right">@Model.Detalles.Sum(d => d.Cantidad)</td>
+        <td></td>
+        <td class="fw-bold" style="text-align:right">@Model.Detalles.Sum(d => d.Subtotal)</td>
+
+
+    </tr>
+
+
+</table>
+

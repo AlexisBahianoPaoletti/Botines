@@ -1,0 +1,76 @@
+﻿@model Botines.Web.ViewModels.Marca.MarcaDetailVm
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Detalles de la MARCA</h2>
+
+<div>
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group mt-3">
+                @Html.DisplayNameFor(model => model.Marca.NombreMarca)
+                @Html.TextBoxFor(model => model.Marca.NombreMarca, new { @class = "form-control", @disabled = "disabled" })
+
+            </div>
+
+        </div>
+        <div class="col-md-6">
+            <div class="form-group m-3">
+                Cantidad de Modelos:@*@Html.DisplayNameFor(model => model.Marca.CantidadModelos)*@
+                @Html.TextBoxFor(model => model.Marca.CantidadModelos, new { @class = "form-control", @disabled = "disabled" })
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@*<p class="mt-3">
+        @Html.ActionLink("Agregar Ciudad", "AddCity", new { paisId = Model.Pais.PaisId }, new { @class = "btn btn-primary" })
+
+        @Html.ActionLink("Volver", "Index", null, new { @class = "btn btn-success" })
+    </p>
+    <hr />*@
+
+<table class="table table-bordered table-hover w-75">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Modelos.FirstOrDefault().NombreModelo)
+        </th>
+        @*<th class="w-25">Acciones</th>*@
+    </tr>
+    @if (Model.Modelos.Any())
+    {
+        foreach (var item in Model.Modelos)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NombreModelo)
+                </td>
+                @*<td>
+                        @Html.ActionLink("Edit", "EditCity", new { id = item.CiudadId }, new { @class = "btn btn-sm btn-warning" })
+                        @Html.ActionLink("Delete", "DeleteCity", new { id = item.CiudadId }, new { @class = "btn btn-sm btn-danger" })
+                    </td>*@
+            </tr>
+        }
+
+    }
+    else
+    {
+        <tr>
+            <td colspan="2" style="text-align:center" class="text-danger"><strong>No se han agregado modelos todavía</strong></td>
+
+        </tr>
+    }
+
+</table>
+
+<div class="form-group mt-3">
+    <div class="col-md-offset-2 col-md-10">
+        @Html.ActionLink("Volver", "Index", null, new { @class = "btn btn-success" })
+    </div>
+</div>
+

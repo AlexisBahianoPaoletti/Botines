@@ -1,0 +1,77 @@
+﻿@using PagedList.Mvc;
+@model PagedList.IPagedList<Botines.Web.ViewModels.Cliente.ClienteListVm>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Lista de CLIENTES</h2>
+
+<p>
+    @Html.ActionLink("Agregar Cliente", "Create", null, new { @class = "btn btn-primary" })
+</p>
+
+@if (TempData["Msg"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["Msg"].ToString()
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+}
+
+<table class="table">
+    <tr>
+
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Apellido)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Localidad)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Provincia)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Pais)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Apellido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Localidad)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Provincia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pais)
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Edit", new { id = item.ClienteId }, new { @class = "btn btn-sm btn-warning" }) |
+                @*@Html.ActionLink("Detalles", "Details", new { id = item.ClienteId }, new { @class = "btn btn-sm btn-info" }) |*@
+                @Html.ActionLink("Borrar", "Delete", new { id = item.ClienteId }, new { @class = "btn btn-sm btn-danger" })
+            </td>
+        </tr>
+    }
+
+</table>
+    Página: @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de: @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("Index", new
+    {
+        page,
+        pageSize = ViewBag.PageSize
+    }))
+

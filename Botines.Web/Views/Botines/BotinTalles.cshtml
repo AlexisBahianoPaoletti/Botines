@@ -1,0 +1,56 @@
+﻿@model Botines.Entidades.Dtos.Botin.BotinListDto
+
+@{
+    ViewBag.Title = "BotinTalles";
+}
+
+<h2>Talles del botin @Html.DisplayFor(model => model.NombreBotin)</h2>
+
+
+<table class="table">
+    <tr>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Talles[0].NumeroTalle)
+        </th>
+        <th>
+            Stock
+        </th>
+
+    </tr>
+   
+    @foreach (var item in Model.Talles)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumeroTalle)
+            </td>
+            <td>
+                100
+            </td>
+            <td>
+                @using (Html.BeginForm("AddToCart", "Carrito", FormMethod.Post))
+                {
+                    @Html.Hidden("botinId", Model.BotinId)
+                    @Html.Hidden("talleId", item.TalleId)
+                    @*@Html.Hidden("returnUrl", "/Botines/")*@
+                    @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+
+                    if (!string.IsNullOrEmpty(User.Identity.Name) && User.Identity.Name != "admin@gmail.com")
+                    {
+                        <button class="btn btn-outline-dark flex-shrink-0 me-3" type="submit">
+                            <i class="fa fa-shopping-cart me-1"></i>
+                            Comprar
+                        </button>
+                    }
+                }
+            </td>
+
+        </tr>
+    }
+    <div class="form-actions no-color">
+
+        @Html.ActionLink("Volver", "Index", null, new { @class = "btn btn-success" })
+    </div>
+
+</table>

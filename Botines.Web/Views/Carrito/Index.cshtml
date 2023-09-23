@@ -1,0 +1,138 @@
+﻿@model Botines.Web.ViewModels.Carrito.CarritoVm
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Carrito de Compras</h2>
+<hr />
+@if (Model.returnUrl == null)
+{
+    Model.returnUrl = "Botines";
+}
+
+@using (Html.BeginForm("ConfirmOrder", "Carrito", FormMethod.Post))
+{
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Items[0].NombreBotin)</th>
+                <th>@Html.DisplayNameFor(model => model.Items[0].Talle)</th>
+                <th>@Html.DisplayNameFor(model => model.Items[0].Cantidad)</th>
+                <th>@Html.DisplayNameFor(model => model.Items[0].PrecioVenta)</th>
+                <th>@Html.DisplayNameFor(model => model.Items[0].PrecioTotal)</th>
+                <th>Acciones</th>
+            </tr>
+
+        </thead>
+        @{int index = 0; }
+    <tbody>
+        @foreach (var item in Model.Items)
+        {
+
+            @Html.HiddenFor(m => m.Items[index].PrecioTotal)
+            @Html.HiddenFor(m => m.Items[index].PrecioVenta)
+            @Html.HiddenFor(m => m.Items[index].Cantidad)
+            @Html.HiddenFor(m => m.Items[index].ItemCarritoId)
+            index++;
+            <tr>
+                <td>@item.NombreBotin</td>
+                <td style="text-align:center">@item.Talle</td>
+                <td style="text-align:right">@item.Cantidad</td>
+                <td style="text-align:right">@item.PrecioVenta.ToString("N")</td>
+                <td style="text-align:right">@item.PrecioTotal.ToString("N")</td>
+                <td>
+                    <form method="post" action="@Url.Action("RemoveFromCart", "Carrito")" id="deleteForm">
+                        @Html.Hidden("botinId", item.TalleBotinId)
+                        @Html.Hidden("returnUrl", Model.returnUrl)
+
+                        <button type="submit" class="btn btn-danger" onclick="return ConfirmarBorrado('@item.NombreBotin')">
+                            <i class="fa fa-trash"></i>
+                            Borrar
+                        </button>
+
+                    </form>
+                </td>
+            </tr>
+        }
+        <tr>
+            <td class="fw-bold">Totales:</td>
+            <td colspan="2" class="fw-bold" style="text-align:right">@Model.Items.Sum(i => i.Cantidad)</td>
+            <td></td>
+            <td class="fw-bold" style="text-align:right">@Model.Items.Sum(i => i.PrecioTotal).ToString("N")</td>
+        </tr>
+    </tbody>
+    </table>
+    <div class="text-center">
+
+
+        @if (Model.Items.Count() > 0)
+        {
+            <a class="btn btn-danger" href="@Url.Action("CancelOrder", "Carrito")">
+                <i class="fa fa-trash-alt"></i>
+                Cancelar Orden
+            </a>
+            <a class="btn btn-success" href="@Model.returnUrl">
+                <i class="fa fa-arrow-alt-circle-left"></i>
+                Seguir Comprando
+            </a>
+            <a>
+                @*//<form method="post" action="@Url.Action("ConfirmOrder", "Carrito")" onclick="return Comprar()">*@
+                <input type="submit" class="btn btn-primary" value="Comprar" />
+                @*<i class="fa fa-coins"></i>
+                Comprar*@
+                @*@Html.Hidden("carritoVm", Model)*@
+                @*</form>*@
+            </a>
+        }
+
+    </div>
+}
+@section scripts
+{
+    <script>function ConfirmarBorrado(nombreProducto) {
+            debugger;
+            Swal.fire({
+                title: 'Confirmar borrado',
+                text: '¿Desea borrar el producto ' + nombreProducto + '?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sí',
+                cancelButtonText: 'No'
+            }).then((result) => {
+                console.log(result);
+                /*debugger;*/
+                if (result.isConfirmed) {
+                    // El usuario hizo clic en "Sí", enviar el formulario
+                    document.getElementById('deleteForm').submit();
+                }
+            });
+
+            // Devolver false para evitar el envío automático del formulario
+            return false;
+            }
+
+
+        @*function Comprar() {
+            debugger;
+            Swal.fire({
+                title: 'Compra realizada!',
+                text: 'Gracias por comprar en FÚCHIBOL!!!',
+                icon: 'success',
+                showCancelButton: false,
+                confirmButtonText: 'Ok'
+            }).then((result) => {
+                console.log(result);
+                /*debugger;*/
+                //if (result.isConfirmed) {
+                    // El usuario hizo clic en "Sí", enviar el formulario
+                    //document.getElementById('deleteForm').submit();
+                //return true;
+                @Url.Action("ConfirmOrder","Carrito")
+                //}
+            });
+
+            // Devolver false para evitar el envío automático del formulario
+            //return false;
+        }*@
+    </script>
+}

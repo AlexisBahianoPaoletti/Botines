@@ -1,0 +1,71 @@
+﻿@model IEnumerable<Botines.Web.ViewModels.Venta.VentaListVm>
+
+@{
+    ViewBag.Title = "Index";
+}
+<div class="d-flex justify-content-between">
+    <h2>Ventas</h2>
+
+    @*<p>
+        <a class="btn btn-primary" href="@Url.Action("Create","Ventas")">
+            <i class="fa fa-plus"></i>
+            Nueva
+        </a>
+
+    </p>*@
+
+</div>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.VentaId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Fecha)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cliente)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Total)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Estado)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.VentaId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fecha)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cliente)
+            </td>
+            <td @*style="text-align:right"*@>
+                @Html.DisplayFor(modelItem => item.Total)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Estado)
+            </td>
+            <td>
+                <a class="btn btn-info" href="@Url.Action("Details","Ventas",new {@id=item.VentaId})">
+                    <i class="fa fa-info"></i>
+                    Detalles
+                </a>
+                @if (item.Estado != "Paga")
+                {
+                    @Html.ActionLink("Delete", "Delete", new { id = item.VentaId }, new { @class = "btn btn-danger" })
+
+                }
+            </td>
+        </tr>
+    }
+
+</table>

@@ -1,0 +1,72 @@
+﻿@using PagedList.Mvc;
+@model PagedList.IPagedList<Botines.Web.ViewModels.Proveedor.ProveedorListVm>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Lista de PROVEEDORES</h2>
+
+<p>
+    @Html.ActionLink("Agregar Proveedor", "Create", null, new { @class = "btn btn-primary" })
+</p>
+@if (TempData["Msg"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["Msg"].ToString()
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+}
+
+
+<table class="table">
+    <tr>
+
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().RazonSocial)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().NombreLocalidad)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().NombreProvincia)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().NombrePais)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RazonSocial)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombreLocalidad)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombreProvincia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombrePais)
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Edit", new { id = item.ProveedorId }, new { @class = "btn btn-sm btn-warning" }) |
+                @*@Html.ActionLink("Detalles", "Details", new { id = item.ProveedorId }, new { @class = "btn btn-sm btn-info" }) |*@
+                @Html.ActionLink("Borrar", "Delete", new { id = item.ProveedorId }, new { @class = "btn btn-sm btn-danger" })
+
+            </td>
+        </tr>
+    }
+
+</table>
+    Página: @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de: @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("Index", new
+    {
+        page,
+        pageSize = ViewBag.PageSize
+    }))
+

@@ -1,0 +1,52 @@
+﻿
+@using PagedList.Mvc;
+@model PagedList.IPagedList<Botines.Web.ViewModels.Pais.PaisListVm>
+
+@{
+    ViewBag.Title = "Index";
+}
+<div class="d-flex justify-content-between w-75">
+    <h2>Lista de Países</h2>
+    <p>
+        @Html.ActionLink("Nuevo", "Create", null, new { @class = "btn btn-primary" })
+    </p>
+
+</div>
+@if (TempData["Msg"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["Msg"].ToString()
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+<table class="table table-bordered table-hover w-75">
+    <tr>
+        <th class="w-75">
+            @Html.DisplayNameFor(model => model.FirstOrDefault().NombrePais)
+        </th>
+        <th class="w-25">
+            Acciones
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombrePais)
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Edit", new { id = item.PaisId }, new { @class = "btn btn-sm btn-warning" }) |
+                @*@Html.ActionLink("Detalles", "Details", new { id = item.PaisId }, new { @class = "btn btn-sm btn-info" }) |*@
+                @Html.ActionLink("Borrar", "Delete", new { id = item.PaisId }, new { @class = "btn btn-sm btn-danger" })
+            </td>
+        </tr>
+    }
+
+</table>
+    Página: @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de: @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("Index", new
+    {
+        page,
+        pageSize = ViewBag.PageSize
+    }))

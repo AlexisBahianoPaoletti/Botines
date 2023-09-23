@@ -1,0 +1,103 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<div class="row">
+    <div class="col-3">
+        <div class="card text-bg-primary mb-3" style="max-width: 20rem;">
+
+            <div class="card-header d-flex justify-content-center">
+                <label class="fw-bold">MARCAS</label>
+                <i class="fa fa-2x fa-boxes"></i>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-10">
+                        <h6>Cantidad:</h6>
+
+                    </div>
+                    <div class="col-sm-2">
+                        <h6>@ViewBag.cantidadMarcas</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-3">
+        <div class="card text-bg-warning mb-3" style="max-width: 20rem;">
+
+            <div class="card-header d-flex justify-content-center">
+                <label class="fw-bold">MODELOS</label>
+                <i class="fa fa-2x fa-boxes"></i>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-10">
+                        <h6>Cantidad:</h6>
+                    </div>
+                    <div class="col-sm-2">
+                        <h6>@ViewBag.cantidadModelos</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-3">
+        <div class="card text-bg-warning" style="max-width: 20rem;">
+
+            <div class="card-header d-flex justify-content-center">
+                <label class="fw-bold">TALLES</label>
+                <i class="fa fa-2x fa-boxes"></i>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-10">
+                        <h6>Cantidad:</h6>
+                    </div>
+                    <div class="col-sm-2">
+                        <h6>@ViewBag.cantidadTalles</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-3">
+        <div class="card text-bg-primary mb-3" style="max-width: 20rem;">
+
+            <div class="card-header d-flex justify-content-center">
+                <label class="fw-bold">BOTINES</label>
+                <i class="fa fa-2x fa-boxes"></i>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-9">
+                        <h6>Cantidad:</h6>
+
+                    </div>
+                    <div class="col-sm-3">
+                        <h6>@ViewBag.cantidadTallesBotines</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="px-4 py-5 my-5 text-center">
+    <img class="d-block mx-auto mb-4" src="@Url.Content(Botines.Utilidades.WC.LogoDeLaPagina)" alt="" width="300" height="465">
+    <h1 class="display-5 fw-bold">FÚCHIBOL</h1>
+    <div class="col-lg-6 mx-auto">
+        <p class="lead mb-1">La página web para comprar tus botines de fútbol.</p>
+        <p class="lead mb-1">Productos 100% originales al mejor precio!</p>
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+            @*<button type="button" class="btn btn-primary btn-lg px-4 gap-3">Primary button</button>
+                <button type="button" class="btn btn-outline-secondary btn-lg px-4">Secondary</button>*@
+        </div>
+    </div>
+</div>

@@ -1,0 +1,122 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Mi aplicación ASP.NET</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
+        <div class="container">
+            @Html.ActionLink("BOTINES", "Index", "Botines", new { area = "" }, new { @class = "navbar-brand" })
+            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Alternar navegación" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1">
+                    <li>@Html.ActionLink("Inicio", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    @*<li>@Html.ActionLink("Acerca de", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Contacto", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>*@
+                    @*<li>@Html.ActionLink("Talles", "Index", "Talles", new { area = "" }, new { @class = "nav-link" })</li>*@
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Archivos
+                        </a>
+                        <ul class="dropdown-menu">
+
+                            <li><a class="dropdown-item" href="@Url.Action("Index","Botines")">Botines</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="@Url.Action("Index","Marcas")">Marcas</a></li>
+                            <li><hr class="dropdown-divider"></li>
+
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li><a class="dropdown-item" href="@Url.Action("Index","Modelos")">Modelos</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                            }
+
+                            <li><a class="dropdown-item" href="@Url.Action("Index","Talles")">Talles</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="@Url.Action("Index","Carrito")">Ver Carrito</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                C.P
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="@Url.Action("Index","Clientes")">Clientes</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="@Url.Action("Index","Proveedores")">Proveedores</a></li>
+                            </ul>
+                        }
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                L.P.P
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="@Url.Action("Index","Localidades")">Localidades</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="@Url.Action("Index","Provincias")">Provincias</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="@Url.Action("Index","Paises")">Países</a></li>
+                            </ul>
+                        }
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Ventas
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="@Url.Action("Index","Ventas",new {area="Identity"})">Ventas</a></li>
+                            </ul>
+                        }
+                    </li>
+
+                    @*<li class="nav-item dropdown">
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Seguridad
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="@Url.Action("Index","RolesAdmin",new {area="Identity"})">Roles</a></li>
+                                <li><a class="dropdown-item" href="@Url.Action("Index","UsersAdmin",new {area="Identity"})">Usuarios</a></li>
+                            </ul>
+                        }
+                    </li>*@
+
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </nav>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Mi aplicación ASP.NET</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

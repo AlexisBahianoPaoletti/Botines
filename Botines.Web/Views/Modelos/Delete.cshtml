@@ -1,0 +1,42 @@
+﻿@model Botines.Web.ViewModels.Modelo.ModeloListVm
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Borrar MODELO</h2>
+
+<h3>¿Está seguro de querer borrar el modelo seleccionado?</h3>
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+<div>
+
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NombreModelo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NombreModelo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NombreMarca)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NombreMarca)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Borrar" class="btn btn-danger" /> |
+            @Html.ActionLink("Volver", "Index", null, new { @class = "btn btn-success" })
+        </div>
+    }
+</div>

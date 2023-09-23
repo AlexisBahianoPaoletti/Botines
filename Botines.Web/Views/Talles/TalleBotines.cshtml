@@ -1,0 +1,68 @@
+﻿@model Botines.Entidades.Dtos.Talle.TalleListDto
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Botines talle nº @Html.DisplayFor(model => model.NumeroTalle)</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Botines[0].NombreBotin)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Botines[0].Marca)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Botines[0].Modelo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Botines[0].PrecioVenta)
+        </th>
+        <th>
+            Stock
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.Suspendido)
+        </th>*@
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Botines)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombreBotin)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Marca)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Modelo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrecioVenta)
+            </td>
+            <td>
+                100
+            </td>
+            @*<td>
+            @Html.DisplayFor(modelItem => item.Suspendido)
+        </td>*@
+            <!--<td>
+        @Html.ActionLink("Editar", "Edit", new { id = item.BotinId }, new { @class = "btn btn-sm btn-warning" }) |
+        @Html.ActionLink("Detalles", "Details", new { id = item.BotinId }, new { @class = "btn btn-sm btn-info" }) |
+        @Html.ActionLink("Borrar", "Delete", new { id = item.BotinId }, new { @class = "btn btn-sm btn-danger" })
+
+    </td>-->
+        </tr>
+
+    }
+    <div class="form-actions no-color">
+        
+        @Html.ActionLink("Volver", "Index", null, new { @class = "btn btn-success" })
+    </div>
+
+</table>

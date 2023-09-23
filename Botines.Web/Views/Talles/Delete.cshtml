@@ -1,0 +1,33 @@
+﻿@model Botines.Web.ViewModels.Talle.TalleListVm
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Borrar TALLE</h2>
+
+<h3>Está seguro de borrar el talle seleccionado?</h3>
+<div>
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NumeroTalle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NumeroTalle)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Borrar" class="btn btn-danger" /> |
+            @Html.ActionLink("Volver", "Index", null, new { @class = "btn btn-success" })
+        </div>
+    }
+</div>
